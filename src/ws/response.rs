@@ -1,5 +1,5 @@
 use super::callback::Arg;
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 
 /// The pong/subscription response.
 #[derive(Deserialize, Debug)]
@@ -106,11 +106,11 @@ pub struct BasePrivateResponse<'a, Data> {
 }
 
 /// The (price, size) pair of orderbook.
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct OrderbookItem<'a>(pub &'a str, pub &'a str);
 
 /// The orderbook data.
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Orderbook<'a> {
     /// Symbol name.
     pub s: &'a str,
@@ -445,7 +445,7 @@ pub struct Position<'a> {
 /// The execution data.
 ///
 /// You may have multiple executions for one order in a single message.
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Execution<'a> {
     /// Product type.
@@ -507,7 +507,7 @@ pub struct Execution<'a> {
 }
 
 /// The order data.
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Order<'a> {
     /// Product type.
@@ -585,7 +585,7 @@ pub struct Order<'a> {
 }
 
 /// The wallet coin data.
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct WalletCoin<'a> {
     /// Coin name, such as BTC, ETH, USDT, USDC.
@@ -620,7 +620,7 @@ pub struct WalletCoin<'a> {
 }
 
 /// The wallet data.
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Wallet<'a> {
     /// Account type.
