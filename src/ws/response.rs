@@ -128,7 +128,7 @@ pub struct Orderbook<'a> {
 
 /// The trade data.
 #[allow(non_snake_case)]
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Serialize, Debug)]
 pub struct Trade<'a> {
     /// The timestamp (ms) that the order is filled.
     pub T: u64,
