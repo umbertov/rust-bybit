@@ -173,7 +173,8 @@ where
     loop {
         // Ping
         if let Ok(ping) = rx.try_recv() {
-            ws.write_message(Message::Ping(ping.into()))?
+            info!("Sending ping message");
+            ws.write_message(Message::Text(ping.into()))?
         }
 
         match ws.read_message() {
