@@ -427,8 +427,10 @@ pub struct Position<'a> {
     pub stop_loss: &'a str,
     /// Trailing stop.
     pub trailing_stop: &'a str,
-    /// Unrealised profit and loss.
+    /// Unrealised profit and loss of the current position.
     pub unrealised_pnl: &'a str,
+    /// Realised profit and loss of the current position.
+    pub cur_realised_pnl: &'a str,
     /// Cumulative realised PnL.
     pub cum_realised_pnl: &'a str,
     /// Position status.
