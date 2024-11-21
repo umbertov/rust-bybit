@@ -58,6 +58,9 @@ pub struct BasePublicResponse<'a, Data> {
     pub ts: u64,
     /// The data vary on the topic.
     pub data: Data,
+    /// Only for orderbook: The timestamp from the match engine when this orderbook data is produced. 
+    /// It can be correlated with T from public trade channel
+    pub cts: Option<u64>,
 }
 
 /// The base ticker response which contains common fields.
