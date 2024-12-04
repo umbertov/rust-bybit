@@ -9,6 +9,7 @@ pub enum FutureRole {
     Inverse,
 }
 
+#[derive(Debug)]
 pub enum KlineInterval {
     Min1,
     Min3,
