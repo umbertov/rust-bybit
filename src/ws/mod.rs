@@ -158,7 +158,7 @@ where
     // Authenticate
     if let Some(credentials) = credentials {
         let req = auth_req(credentials);
-        ws.write_message(Message::Text(req))?;
+        ws.send(Message::Text(req.into()))?;
     }
 
     // Subscribe
@@ -166,7 +166,7 @@ where
     for i in (0..topics.len()).step_by(SUBSCRIBE_BATCH_SIZE) {
         let after_last = cmp::min(i + SUBSCRIBE_BATCH_SIZE, topics.len());
         let batch = &topics[i..after_last];
-        ws.write_message(Message::Text(subscription(batch)))?;
+        ws.send(Message::Text(subscription(batch).into()))?;
     }
 
     let rx = ping();
@@ -174,20 +174,19 @@ where
         // Ping
         if let Ok(ping) = rx.try_recv() {
             info!("Sending ping message");
-            ws.write_message(Message::Text(ping.into()))?
+            ws.send(Message::Text(ping.into()))?
         }
 
-        match ws.read_message() {
-            Ok(msg) => match msg {
-                Message::Text(content) => {
+        match ws.read() {
+            Ok(msg) => {
+                if let Message::Text(content) = msg {
                     debug!("Received: {}", content);
                     match serde_json::from_str(&content) {
                         Ok(res) => callback(res),
                         Err(e) => error!("Error: {}", e),
                     }
                 }
-                _ => {}
-            },
+            }
             Err(e) => match e {
                 tungstenite::Error::Io(ref ee) => {
                     if ee.kind() != std::io::ErrorKind::WouldBlock
