@@ -206,11 +206,11 @@ fn set_read_timeout(ws: &WebSocket<MaybeTlsStream<TcpStream>>) {
         MaybeTlsStream::Plain(s) => {
             s.set_read_timeout(Some(Duration::from_secs(10))).unwrap();
         }
-        MaybeTlsStream::NativeTls(t) => {
-            t.get_ref()
-                .set_read_timeout(Some(Duration::from_secs(10)))
-                .unwrap();
-        }
+        // MaybeTlsStream::NativeTls(t) => {
+        //     t.get_ref()
+        //         .set_read_timeout(Some(Duration::from_secs(10)))
+        //         .unwrap();
+        // }
         _ => unreachable!(),
     };
 }
