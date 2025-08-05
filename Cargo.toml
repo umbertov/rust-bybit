@@ -17,7 +17,7 @@ name = "bybit"
 path = "src/lib.rs"
 
 [dependencies]
-tungstenite = { version = "*", features = ["native-tls"] }
+tungstenite = { version = "*", features = ["rustls"] }
 thiserror = "*"
 serde = { version = "*", features = ["derive"] }
 serde_json = "*"
