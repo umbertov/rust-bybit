@@ -17,7 +17,7 @@ name = "bybit"
 path = "src/lib.rs"
 
 [dependencies]
-tungstenite = { version = "*", features = ["rustls"] }
+tungstenite = { version = "*", features = ["rustls-tls-webpki-roots"] }
 thiserror = "*"
 serde = { version = "*", features = ["derive"] }
 serde_json = "*"
