@@ -21,7 +21,8 @@ tungstenite = { version = "*", features = ["rustls"] }
 thiserror = "*"
 serde = { version = "*", features = ["derive"] }
 serde_json = "*"
-ring = "*"
+sha2 = "*"
+hmac = "*"
 hex = "*"
 log = "*"
 

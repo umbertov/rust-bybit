@@ -1,6 +1,10 @@
 use hex;
-use ring::hmac;
+use hmac::{Hmac, Mac};
+use sha2::Sha256;
 use std::time::SystemTime;
+
+// Create alias for HMAC-SHA256
+type HmacSha256 = Hmac<Sha256>;
 
 pub fn millis() -> u128 {
     SystemTime::now()
@@ -10,9 +14,12 @@ pub fn millis() -> u128 {
 }
 
 pub fn sign(secret: &str, msg: &str) -> String {
-    let key = hmac::Key::new(hmac::HMAC_SHA256, secret.as_bytes());
-    let tag = hmac::sign(&key, msg.as_bytes());
-    hex::encode(tag.as_ref())
+    let mut mac = HmacSha256::new_from_slice(secret.as_bytes())
+        .expect("HMAC can take key of any size");
+    mac.update(msg.as_bytes());
+    let result = mac.finalize();
+    let bytes = result.into_bytes();
+    hex::encode(bytes)
 }
 
 #[cfg(test)]
@@ -20,7 +27,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_millseconds() {
+    fn test_milliseconds() {
         assert!(millis() > 0);
     }
 
@@ -32,3 +39,4 @@ mod tests {
         );
     }
 }
+
